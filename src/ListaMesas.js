@@ -3,19 +3,19 @@ import React, { Component } from 'react';
 var ListaMesas=React.createClass({
   listar:function(item){
       return(
-          <div>
-            <label> mesa con {item.capacity} puestos</label>
-            <button value={item.table_restaurant_id} onClick={this.props.reservarMesa}>Agendar</button>
-          </div>
+          <option value={item.table_restaurant_id}>{item.table_restaurant_id} mesa con capaciddad para {item.capacity} personas</option>
       );
   },
   render:function(){
       return(
         <div>
           Seleccione Mesa:
+          <select onChange={this.props.handleChange}>
+          <option value=""></option>
           {
             this.props.mesas.map(this.listar)
           }
+          </select>
         </div>
       );
   }

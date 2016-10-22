@@ -14,7 +14,8 @@ var AgendarMesa = React.createClass({
       restaurante:'',
       mesas:[],
       date:'',
-      cantidadPersonas:''
+      cantidadPersonas:'',
+      mesa:''
     }
   },
 
@@ -26,7 +27,7 @@ var AgendarMesa = React.createClass({
   },
   obtenerMesas(restaurante){
     if(restaurante!=null){
-      
+
       //alert("se consume el servicio");
     }
     this.setState({mesas:[
@@ -45,7 +46,7 @@ var AgendarMesa = React.createClass({
     ]});
   },
   handleSubmit:function(event){
-    alert("agendar mesa "+ event.target.value);
+    alert("agendar mesa ");
   },
   handleDate:function(event){
     this.setState({date:event.target.value});
@@ -59,6 +60,9 @@ var AgendarMesa = React.createClass({
   handleUsername:function(event){
     this.setState({username:event.target.value});
   },
+  handleMesa:function(event){
+    this.state({mesa:event.target.value});
+  },
   render:function(){
     return(
       <div>
@@ -68,8 +72,8 @@ var AgendarMesa = React.createClass({
         Cantidad de personas<input type="text" onChange={this.handlePersonas}/>
         Username:<input type="text" onChange={this.handleUsername}/>
 
-        <ListaMesas mesas={this.state.mesas} reservarMesa={this.handleSubmit}/>
-
+        <ListaMesas mesas={this.state.mesas} handleChange={this.handleMesa}/>
+        <input type="submit" value="Agendar Mesa" onClick={this.handleSubmit}/>
       </div>
     );
   }
