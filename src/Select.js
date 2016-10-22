@@ -4,7 +4,7 @@ var Select = React.createClass({
 
   listar:function(item){
     return(
-      <option value={item}>{item}</option>
+      <option value={item.id}>{item.nombre}</option>
     );
   },
   render:function(){
