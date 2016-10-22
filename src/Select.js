@@ -10,8 +10,11 @@ var Select = React.createClass({
   render:function(){
     return(
       <select onChange={this.props.handleChange}>
+        <option value=""></option>
         {
+          //<option value="3">3</option>
           this.props.datos.map(this.listar)
+
         }
       </select>
     )

@@ -4,7 +4,8 @@ var ListaMesas=React.createClass({
   listar:function(item){
       return(
           <div>
-            <button value={item.table_restaurant_id} onClick={this.props.reservarMesa}>mesa {item.table_restaurant_id}</button>
+            <label> mesa con {item.capacity} puestos</label>
+            <button value={item.table_restaurant_id} onClick={this.props.reservarMesa}>Agendar</button>
           </div>
       );
   },
