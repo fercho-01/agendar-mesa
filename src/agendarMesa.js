@@ -38,15 +38,35 @@ var AgendarMesa = React.createClass({
         });
       //alert("se consume el servicio");
     }
+
+    this.setState({mesas:[
+      {
+        table_restaurant_id:"1",
+        restaurant:"4",
+        capacity:"4",
+        available:"true"
+      },
+      {
+        table_restaurant_id:"2",
+        restaurant:"4",
+        capacity:"4",
+        available:"true"
+      }
+    ]});
   },
-  handleSubmit:function(event){
-    alert("agendar mesa ");
+  handleSubmit:function(){
+    if(this.state.mesa!="" && this.state.username!="" && this.state.date!="" && this.state.duration!="" && this.state.cantidadPersonas!=""){
+      alert("añadir");
+    }else{
+      //alert("no");
+      //alert(this.state.mesa +  this.state.username+this.state.date+this.state.duration+this.state.cantidadPersonas)
+    }
   },
   handleDate:function(event){
     this.setState({date:event.target.value});
   },
   handleDuracion:function(event){
-    this.setState({date:event.target.value});
+    this.setState({duration:event.target.value});
   },
   handlePersonas:function(event){
     this.setState({cantidadPersonas:event.target.value});
@@ -55,7 +75,8 @@ var AgendarMesa = React.createClass({
     this.setState({username:event.target.value});
   },
   handleMesa:function(event){
-    this.state({mesa:event.target.value});
+    this.setState({mesa:event.target.value});
+    //alert(this.state.mesa);
   },
   render:function(){
     return(
