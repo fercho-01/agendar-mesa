@@ -32,8 +32,13 @@ var AgendarMesa = React.createClass({
             url: 'https://restaurant-node.herokuapp.com/api/tables/available/4',
             method: 'GET',
             success: function(result) {
-                alert("servicio consumido")
+                alert("Servicio consumido")
+                console.log(result);
                 //this.setState({mesas: result});
+            },
+            error: function(result) {
+              alert("Servicio Error")
+              console.log(result);
             }.bind(this)
         });
       //alert("se consume el servicio");
