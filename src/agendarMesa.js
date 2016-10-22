@@ -16,6 +16,8 @@ var AgendarMesa = React.createClass({
       mesas:[],
       date:'',
       cantidadPersonas:'',
+      username:'',
+      duracion:'',
       mesa:''
     }
   },
@@ -46,12 +48,21 @@ var AgendarMesa = React.createClass({
   },
   handleSubmit:function(event){
     alert("agendar mesa ");
+    $.ajax({
+      type: "POST",
+      url: 'https://restaurant-node.herokuapp.com/api/tables/reserve',
+      data: {
+        client: ''
+      },
+      success: success,
+      dataType: dataType
+    });
   },
   handleDate:function(event){
     this.setState({date:event.target.value});
   },
   handleDuracion:function(event){
-    this.setState({date:event.target.value});
+    this.setState({duracion:event.target.value});
   },
   handlePersonas:function(event){
     this.setState({cantidadPersonas:event.target.value});
