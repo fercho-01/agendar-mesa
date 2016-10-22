@@ -11,6 +11,7 @@ var ListaMesas=React.createClass({
   render:function(){
       return(
         <div>
+          Seleccione Mesa:
           {
             this.props.mesas.map(this.listar)
           }

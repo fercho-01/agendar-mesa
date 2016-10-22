@@ -61,14 +61,14 @@ var AgendarMesa = React.createClass({
   render:function(){
     return(
       <div>
-        <Select datos={this.state.listaRestaurantes} handleChange={this.handleChangeRestaurantes}/>
+        Seleccione restaurante:<Select datos={this.state.listaRestaurantes} handleChange={this.handleChangeRestaurantes}/>
         Ingrese la fecha:<input type="text" onChange={this.handleDate}/>
         Duración de la reserva:<input type="text" onChange={this.handleDuracion}/>
         Cantidad de personas<input type="text" onChange={this.handlePersonas}/>
-        <input type="text" onChange={this.handleUsername}/>
+        Username:<input type="text" onChange={this.handleUsername}/>
 
         <ListaMesas mesas={this.state.mesas}/>
-        <input type="submit" onClick={this.handleSubmit}/>
+        
       </div>
     );
   }
