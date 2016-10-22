@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Select from './Select';
 import ListaMesas from './ListaMesas';
+import $ from 'jquery';
 
 var AgendarMesa = React.createClass({
   getInitialState:function(){
@@ -27,23 +28,16 @@ var AgendarMesa = React.createClass({
   },
   obtenerMesas(restaurante){
     if(restaurante!=null){
-
+      $.ajax({
+            url: 'https://restaurant-node.herokuapp.com/api/tables/available/4',
+            method: 'GET',
+            success: function(result) {
+                alert("servicio consumido")
+                //this.setState({mesas: result});
+            }.bind(this)
+        });
       //alert("se consume el servicio");
     }
-    this.setState({mesas:[
-      {
-        table_restaurant_id:"1",
-        restaurant:"4",
-        capacity:"4",
-        available:"true"
-      },
-      {
-        table_restaurant_id:"2",
-        restaurant:"4",
-        capacity:"4",
-        available:"true"
-      }
-    ]});
   },
   handleSubmit:function(event){
     alert("agendar mesa ");
