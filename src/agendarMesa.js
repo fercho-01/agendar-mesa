@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Select from './Select';
+import ListaMesas from './ListaMesas';
 
 var AgendarMesa = React.createClass({
   getInitialState:function(){
@@ -10,7 +11,10 @@ var AgendarMesa = React.createClass({
         {id:"3",nombre:"Juguitos"},
         {id:"4",nombre:"Subway"}
       ],
-
+      restaurante:'',
+      mesas:[],
+      date:'',
+      cantidadPersonas:''
     }
   },
 
@@ -21,10 +25,22 @@ var AgendarMesa = React.createClass({
     //this.setState({value: event.target.value});
   },
   obtenerMesas(restaurante){
+    if(restaurante!=null){
+      //alert("se consume el servicio");
+    }
     this.setState({mesas:[
-      "mesa 1",
-      "mesa 2",
-      "mesa 3"
+      {
+        table_restaurant_id:"1",
+        restaurant:"4",
+        capacity:"4",
+        available:"true"
+      },
+      {
+        table_restaurant_id:"2",
+        restaurant:"4",
+        capacity:"4",
+        available:"true"
+      }
     ]});
   },
   handleSubmit:function(){
@@ -51,7 +67,7 @@ var AgendarMesa = React.createClass({
         Cantidad de personas<input type="text" onChange={this.handlePersonas}/>
         <input type="text" onChange={this.handleUsername}/>
 
-
+        <ListaMesas mesas={this.state.mesas}/>
         <input type="submit" onClick={this.handleSubmit}/>
       </div>
     );
