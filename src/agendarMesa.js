@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Select from './Select';
 import ListaMesas from './ListaMesas';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import moment from 'moment';
 import $ from 'jquery';
 
 var AgendarMesa = React.createClass({
@@ -18,7 +21,8 @@ var AgendarMesa = React.createClass({
       cantidadPersonas:'',
       username:'',
       duracion:'',
-      mesa:''
+      mesa:'',
+      date :moment()
     }
   },
 
@@ -87,8 +91,9 @@ var AgendarMesa = React.createClass({
       //alert(this.state.mesa +  this.state.username+this.state.date+this.state.duration+this.state.cantidadPersonas)
     }
   },
-  handleDate:function(event){
-    this.setState({date:event.target.value});
+  handleDate:function(date){
+    this.setState({date:date});
+    console.log(date);
   },
   handleDuracion:function(event){
     this.setState({duracion:event.target.value});
@@ -106,11 +111,16 @@ var AgendarMesa = React.createClass({
   render:function(){
     return(
       <div>
-        Seleccione restaurante:<Select datos={this.state.listaRestaurantes} handleChange={this.handleChangeRestaurantes}/>
-        Ingrese la fecha:<input type="text" onChange={this.handleDate}/>
-        Duración de la reserva:<input type="text" onChange={this.handleDuracion}/>
-        Cantidad de personas<input type="text" onChange={this.handlePersonas}/>
-        Username:<input type="text" onChange={this.handleUsername}/>
+        <label>Seleccione restaurante:</label>
+        <Select datos={this.state.listaRestaurantes} handleChange={this.handleChangeRestaurantes}/>
+        <label>Ingrese la fecha:</label>
+        <DatePicker selected={this.state.date} onChange={this.handleDate} />
+        <label>Duración de la reserva:</label>
+        <input type="text" onChange={this.handleDuracion}/>
+        <label>Cantidad de personas:</label>
+        <input type="text" onChange={this.handlePersonas}/>
+        <label>Username:</label>
+        <input type="text" onChange={this.handleUsername}/>
 
         <ListaMesas mesas={this.state.mesas} handleChange={this.handleMesa}/>
         <input type="submit" value="Agendar Mesa" onClick={this.handleSubmit}/>
