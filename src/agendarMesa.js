@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import Select from './Select';
 import ListaMesas from './ListaMesas';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+//import 'react-datepicker/dist/react-datepicker.css';
+import 'react-datetime/css/react-datetime.css';
 import moment from 'moment';
+import Datetime from 'react-datetime';
 import $ from 'jquery';
 
 var AgendarMesa = React.createClass({
@@ -114,14 +116,14 @@ var AgendarMesa = React.createClass({
         <label>Seleccione restaurante:</label>
         <Select datos={this.state.listaRestaurantes} handleChange={this.handleChangeRestaurantes}/>
         <label>Ingrese la fecha:</label>
-        <DatePicker selected={this.state.date} onChange={this.handleDate} />
+
         <label>Duración de la reserva:</label>
         <input type="text" onChange={this.handleDuracion}/>
         <label>Cantidad de personas:</label>
         <input type="text" onChange={this.handlePersonas}/>
         <label>Username:</label>
         <input type="text" onChange={this.handleUsername}/>
-
+        <Datetime onChange={this.handleDate}/>
         <ListaMesas mesas={this.state.mesas} handleChange={this.handleMesa}/>
         <input type="submit" value="Agendar Mesa" onClick={this.handleSubmit}/>
       </div>
