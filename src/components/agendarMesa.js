@@ -11,15 +11,17 @@ import $ from 'jquery';
 import Reflux from 'reflux';
 import RestaurantStore from '../stores/RestaurantStore';
 import FranquiciaStore from '../stores/FranquiciaStore';
-import RestaurantActions from '../actions/RestaurantActions';
-import FranquiciaActions from '../actions/FranquiciaActions';
+import MesaStore from '../stores/MesaStore';
+
+import MesaActions from '../actions/MesaActions';
 
 
 
 var AgendarMesa = React.createClass({
   mixins: [
     Reflux.connect(RestaurantStore, 'listaRestaurantes'),
-    Reflux.connect(FranquiciaStore, 'listaFranquiciasCompleta')
+    Reflux.connect(FranquiciaStore, 'listaFranquiciasCompleta'),
+    Reflux.connect(MesaStore,'mesasDisponibles')
   ],
 
   getInitialState:function(){
@@ -27,13 +29,13 @@ var AgendarMesa = React.createClass({
       listaRestaurantes:[],
       listaFranquicias:[],
       restaurante:'',
+      franquicia:'',
       mesas:[],
       date:'',
       cantidadPersonas:'',
       username:'',
       duracion:'',
       mesa:'',
-      date :moment()
     }
   },
 
@@ -49,42 +51,11 @@ var AgendarMesa = React.createClass({
     }
 
     this.setState({listaFranquicias:franquiciasRestaurante});
-
-
-
+    this.buscarMesas();
   },
-  obtenerMesas(restaurante){
-    if(restaurante!=null){
-      $.ajax({
-            url: 'https://restaurant-node.herokuapp.com/api/tables/available/4',
-            method: 'GET',
-            success: function(result) {
-                //alert("Servicio consumido")
-                console.log(result.toString());
-                //this.setState({mesas: result});
-            },
-            error: function(result) {
-              alert("Servicio Error")
-              console.log(result);
-            }.bind(this)
-        });
-      //alert("se consume el servicio");
-    }
-
-    this.setState({mesas:[
-      {
-        table_restaurant_id:"1",
-        restaurant:"4",
-        capacity:"4",
-        available:"true"
-      },
-      {
-        table_restaurant_id:"2",
-        restaurant:"4",
-        capacity:"4",
-        available:"true"
-      }
-    ]});
+  handleChangeFranquicia:function(event){
+    this.setState({franquicia:event.target.value});
+    this.buscarMesas();
   },
   handleSubmit:function(event){
     alert(JSON.stringify(this.state.agendarStore));
@@ -115,20 +86,70 @@ var AgendarMesa = React.createClass({
   },
   handleDate:function(date){
     this.setState({date:date});
-    console.log(date);
+    this.buscarMesas();
   },
   handleDuracion:function(event){
     this.setState({duracion:event.target.value});
+    this.buscarMesas();
   },
   handlePersonas:function(event){
     this.setState({cantidadPersonas:event.target.value});
+    this.buscarMesas();
   },
   handleUsername:function(event){
     this.setState({username:event.target.value});
+    this.buscarMesas();
   },
   handleMesa:function(event){
     this.setState({mesa:event.target.value});
     //alert(this.state.mesa);
+  },
+  buscarMesas:function(){
+    console.clear();
+    var franquicia = this.state.franquicia;
+    var fechaInicial = this.state.date;
+    var cupos = this.state.cantidadPersonas;
+    var duracion = this.state.duracion;
+    var fechaFinal='';
+
+
+    if (fechaInicial && duracion) {
+      //fechaInicial =  fechaInicial.subtract(5,'h');
+      //var fecha1 = moment(fechaInicial);
+      //fecha1 = fecha1.subtract(5,'h');
+      //fechaInicial = fecha1;
+      //this.setState({date:fechaInicial});
+      var fechaFinal = fechaInicial.add(duracion,'m');
+    }
+
+    console.log("fecha inicial: ");
+    console.log(fechaInicial);
+    console.log("duracion: ");
+    console.log(duracion);
+    console.log("fecha final: ");
+    console.log(fechaFinal);
+    /*
+    var franquicia = 10;
+    var fechaInicial = "2016-12-01 13:59:59";
+    var fechaFinal = "2016-12-01 14:00:00";
+    var cupos = 4;
+    var param = franquicia+'/'+fechaInicial+'/'+fechaFinal+'/'+cupos;
+    $.ajax({
+        url: 'https://restaurant-node.herokuapp.com/api/tables/available/'+param,
+        async: true,
+      	crossDomain: true,
+        method: 'GET',
+      	cache: false,
+      	context: this,
+		    success: function(data) {
+          this.setState({mesas:data.slice()});
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+          console.log("Status: " + textStatus);
+          console.log("Error: " + errorThrown);
+        }
+    });
+    */
   },
   render:function(){
     if(this.state.listaRestaurantes){
@@ -137,7 +158,7 @@ var AgendarMesa = React.createClass({
           <label>Seleccione restaurante:</label>
           <Select datos={this.state.listaRestaurantes} handleChange={this.handleChangeRestaurantes}/>
           <label>Seleccion franquicia:</label>
-          <Select datos={this.state.listaFranquicias} handleChange={this.handleChangeRestaurantes}/>
+          <Select datos={this.state.listaFranquicias} handleChange={this.handleChangeFranquicia}/>
           <label>Ingrese la fecha:</label>
           <Datetime onChange={this.handleDate}/>
           <label>Duración de la reserva:</label>
@@ -148,12 +169,11 @@ var AgendarMesa = React.createClass({
           <input type="text" onChange={this.handleUsername}/>
           <ListaMesas mesas={this.state.mesas} handleChange={this.handleMesa}/>
           <input type="submit" value="Agendar Mesa" onClick={this.handleSubmit}/>
-
         </div>
       );
     }else{
       return(
-        <label>Seleccione restaurante:</label>
+        <label>No hay restaurantes disponibles</label>
       )
     }
 

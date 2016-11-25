@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 var ListaMesas=React.createClass({
   listar:function(item){
       return(
-          <option value={item.table_restaurant_id}>{item.table_restaurant_id} mesa con capaciddad para {item.capacity} personas</option>
+          <option value={item.id_table_restaurant}>mesa con capaciddad para {item.capacity} personas</option>
       );
   },
   render:function(){
