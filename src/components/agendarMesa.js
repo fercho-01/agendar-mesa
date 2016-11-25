@@ -108,14 +108,9 @@ var AgendarMesa = React.createClass({
     this.setState({mesa:event.target.value});
     //alert(this.state.mesa);
   },
-  buscarMesas:function(){
-
-    /*
-    var franquicia = 10;
-    var fechaInicial = "2016-12-01 13:59:59";
-    var fechaFinal = "2016-12-01 14:00:00";
-    var cupos = 4;
+  buscarMesas:function(franquicia,fechaInicial,fechaFinal,cupos){
     var param = franquicia+'/'+fechaInicial+'/'+fechaFinal+'/'+cupos;
+    console.log(param);
     $.ajax({
         url: 'https://restaurant-node.herokuapp.com/api/tables/available/'+param,
         async: true,
@@ -131,7 +126,6 @@ var AgendarMesa = React.createClass({
           console.log("Error: " + errorThrown);
         }
     });
-    */
   },
   handleBuscar:function(){
     console.clear();
@@ -147,13 +141,14 @@ var AgendarMesa = React.createClass({
       var fechaFinal = fechaaux.add(duracion,'m');
     }
 
+    if(franquicia && fecha1 && fechaFinal && cupos){
+      var fecha01 = fecha1.get('year')+'-'+fecha1.get('month')+'-'+fecha1.get('day')+' '+
+                    fecha1.get('hour')+':'+fecha1.get('minute')+':'+fecha1.get('second');
 
-    console.log("fecha inicial: ");
-    console.log(fecha1);
-    console.log("duracion: ");
-    console.log(duracion);
-    console.log("fecha final: ");
-    console.log(fechaFinal);
+      var fecha02 = fechaFinal.get('year')+'-'+fechaFinal.get('month')+'-'+fechaFinal.get('day')+' '+
+                    fechaFinal.get('hour')+':'+fechaFinal.get('minute')+':'+fechaFinal.get('second');
+      this.buscarMesas(franquicia,fecha01,fecha02,cupos);
+    }
   },
   render:function(){
     if(this.state.listaRestaurantes){
@@ -173,7 +168,6 @@ var AgendarMesa = React.createClass({
           <input type="text" onChange={this.handleUsername}/>
           <input type="submit" value="Buscar Mesas" onClick={this.handleBuscar}/>
           <ListaMesas mesas={this.state.mesas} handleChange={this.handleMesa}/>
-
           <input type="submit" value="Agendar Mesa" onClick={this.handleSubmit}/>
 
         </div>
