@@ -10,7 +10,7 @@ var ListaMesas=React.createClass({
       return(
         <div>
           Seleccione Mesa:
-          <select onChange={this.props.handleChange}>
+          <select onChange={this.props.handleChange} >
           <option value=""></option>
           {
             this.props.mesas.map(this.listar)

@@ -7,16 +7,17 @@ import 'react-datetime/css/react-datetime.css';
 import moment from 'moment';
 import Datetime from 'react-datetime';
 import $ from 'jquery';
+import Reflux from 'reflux';
+import RestaurantStore from '../stores/RestaurantStore';
+import RestaurantActions from '../actions/RestaurantActions';
+
 
 var AgendarMesa = React.createClass({
+  mixins: [Reflux.connect(RestaurantStore, 'restaurantStore')],
   getInitialState:function(){
+
     return{
-      listaRestaurantes:[
-        {id:"1",nombre:"Torino"},
-        {id:"2",nombre:"Rikuritas"},
-        {id:"3",nombre:"Juguitos"},
-        {id:"4",nombre:"Subway"}
-      ],
+      listaRestaurantes:[],
       restaurante:'',
       mesas:[],
       date:'',
@@ -40,8 +41,8 @@ var AgendarMesa = React.createClass({
             url: 'https://restaurant-node.herokuapp.com/api/tables/available/4',
             method: 'GET',
             success: function(result) {
-                alert("Servicio consumido")
-                console.log(result);
+                //alert("Servicio consumido")
+                console.log(result.toString());
                 //this.setState({mesas: result});
             },
             error: function(result) {
@@ -68,6 +69,7 @@ var AgendarMesa = React.createClass({
     ]});
   },
   handleSubmit:function(event){
+    alert(JSON.stringify(this.state.agendarStore));
     if(this.state.mesa!="" && this.state.username!="" && this.state.date!="" && this.state.duration!="" && this.state.cantidadPersonas!=""){
       alert("añadir");
       $.ajax({
@@ -111,23 +113,30 @@ var AgendarMesa = React.createClass({
     //alert(this.state.mesa);
   },
   render:function(){
-    return(
-      <div>
-        <label>Seleccione restaurante:</label>
-        <Select datos={this.state.listaRestaurantes} handleChange={this.handleChangeRestaurantes}/>
-        <label>Ingrese la fecha:</label>
+    if(this.state.restaurantStore){
+      return(
+        <div>
+          <label>Seleccione restaurante:</label>
+          <Select datos={this.state.restaurantStore} handleChange={this.handleChangeRestaurantes}/>
+          <label>Ingrese la fecha:</label>
+          <Datetime onChange={this.handleDate}/>
+          <label>Duración de la reserva:</label>
+          <input type="text" onChange={this.handleDuracion}/>
+          <label>Cantidad de personas:</label>
+          <input type="text" onChange={this.handlePersonas}/>
+          <label>Username:</label>
+          <input type="text" onChange={this.handleUsername}/>
+          <ListaMesas mesas={this.state.mesas} handleChange={this.handleMesa}/>
+          <input type="submit" value="Agendar Mesa" onClick={this.handleSubmit}/>
 
-        <label>Duración de la reserva:</label>
-        <input type="text" onChange={this.handleDuracion}/>
-        <label>Cantidad de personas:</label>
-        <input type="text" onChange={this.handlePersonas}/>
-        <label>Username:</label>
-        <input type="text" onChange={this.handleUsername}/>
-        <Datetime onChange={this.handleDate}/>
-        <ListaMesas mesas={this.state.mesas} handleChange={this.handleMesa}/>
-        <input type="submit" value="Agendar Mesa" onClick={this.handleSubmit}/>
-      </div>
-    );
+        </div>
+      );
+    }else{
+      return(
+        <label>Seleccione restaurante:</label>
+      )
+    }
+
   }
 });
 export default AgendarMesa;
