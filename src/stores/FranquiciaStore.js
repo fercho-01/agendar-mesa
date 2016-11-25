@@ -1,17 +1,15 @@
 import Reflux from 'reflux';
 import $ from 'jquery';
-import RestaurantActions from '../actions/RestaurantActions';
+import FranquiciaActions from '../actions/FranquiciaActions';
 
-var RestaurantStore = Reflux.createStore({
-  listenables:[RestaurantActions],
-  //listaRestaurantes: [],
-  init: function() {
-        this.ObtenerRestaurantes();
+var FranquiciaStore = Reflux.createStore({
+  listenables:[FranquiciaActions],
+  init:function(){
+    this.ObtenerFranquicias();
   },
-
-  ObtenerRestaurantes:function(){
+  ObtenerFranquicias:function(){
     $.ajax({
-        url: 'http://haskell-rest.herokuapp.com/restaurantes',
+        url: 'https://restaurants-udea-soft.herokuapp.com/franchises',
         async: true,
       	crossDomain: true,
         method: 'GET',
@@ -26,7 +24,6 @@ var RestaurantStore = Reflux.createStore({
         }
     });
   }
-  
-});
 
-export default RestaurantStore;
+});
+export default FranquiciaStore;

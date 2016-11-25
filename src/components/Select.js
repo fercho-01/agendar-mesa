@@ -3,9 +3,16 @@ import React, { Component } from 'react';
 var Select = React.createClass({
 
   listar:function(item){
-    return(
-      <option value={item.id_restaurant}>{item.name}</option>
-    );
+    if(item.id_restaurant){
+      return(
+        <option value={item.id_restaurant}>{item.name}</option>
+      );
+    }else{
+      return(
+        <option value={item.id_franchise}>{item.name_franchise}</option>
+      );
+    }
+
   },
   render:function(){
     return(

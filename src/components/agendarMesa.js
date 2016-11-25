@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import Select from './Select';
 import ListaMesas from './ListaMesas';
@@ -9,15 +10,22 @@ import Datetime from 'react-datetime';
 import $ from 'jquery';
 import Reflux from 'reflux';
 import RestaurantStore from '../stores/RestaurantStore';
+import FranquiciaStore from '../stores/FranquiciaStore';
 import RestaurantActions from '../actions/RestaurantActions';
+import FranquiciaActions from '../actions/FranquiciaActions';
+
 
 
 var AgendarMesa = React.createClass({
-  mixins: [Reflux.connect(RestaurantStore, 'restaurantStore')],
-  getInitialState:function(){
+  mixins: [
+    Reflux.connect(RestaurantStore, 'listaRestaurantes'),
+    Reflux.connect(FranquiciaStore, 'listaFranquiciasCompleta')
+  ],
 
+  getInitialState:function(){
     return{
       listaRestaurantes:[],
+      listaFranquicias:[],
       restaurante:'',
       mesas:[],
       date:'',
@@ -30,10 +38,20 @@ var AgendarMesa = React.createClass({
   },
 
   handleChangeRestaurantes:function(event) {
-    this.setState({restaurante:event.target.value});
-    this.obtenerMesas(this.state.restaurante);
-    //alert(event.target.value);
-    //this.setState({value: event.target.value});
+    var idRestaurante = event.target.value;
+    this.setState({restaurante:idRestaurante});
+    var franquicias = this.state.listaFranquiciasCompleta;
+    var franquiciasRestaurante = [];
+    for(var i in franquicias){
+      if(franquicias[i].restaurant == idRestaurante ){
+        franquiciasRestaurante.push(franquicias[i]);
+      }
+    }
+
+    this.setState({listaFranquicias:franquiciasRestaurante});
+
+
+
   },
   obtenerMesas(restaurante){
     if(restaurante!=null){
@@ -113,11 +131,13 @@ var AgendarMesa = React.createClass({
     //alert(this.state.mesa);
   },
   render:function(){
-    if(this.state.restaurantStore){
+    if(this.state.listaRestaurantes){
       return(
         <div>
           <label>Seleccione restaurante:</label>
-          <Select datos={this.state.restaurantStore} handleChange={this.handleChangeRestaurantes}/>
+          <Select datos={this.state.listaRestaurantes} handleChange={this.handleChangeRestaurantes}/>
+          <label>Seleccion franquicia:</label>
+          <Select datos={this.state.listaFranquicias} handleChange={this.handleChangeRestaurantes}/>
           <label>Ingrese la fecha:</label>
           <Datetime onChange={this.handleDate}/>
           <label>Duración de la reserva:</label>
