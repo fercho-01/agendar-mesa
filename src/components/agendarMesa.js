@@ -85,8 +85,12 @@ var AgendarMesa = React.createClass({
     }
   },
   handleDate:function(date){
+    //date = date.subtract(5,'h');
     this.setState({date:date});
-    this.buscarMesas();
+
+    console.log("date");
+    console.log(date);
+    //this.buscarMesas();
   },
   handleDuracion:function(event){
     this.setState({duracion:event.target.value});
@@ -105,29 +109,7 @@ var AgendarMesa = React.createClass({
     //alert(this.state.mesa);
   },
   buscarMesas:function(){
-    console.clear();
-    var franquicia = this.state.franquicia;
-    var fechaInicial = this.state.date;
-    var cupos = this.state.cantidadPersonas;
-    var duracion = this.state.duracion;
-    var fechaFinal='';
 
-
-    if (fechaInicial && duracion) {
-      //fechaInicial =  fechaInicial.subtract(5,'h');
-      //var fecha1 = moment(fechaInicial);
-      //fecha1 = fecha1.subtract(5,'h');
-      //fechaInicial = fecha1;
-      //this.setState({date:fechaInicial});
-      var fechaFinal = fechaInicial.add(duracion,'m');
-    }
-
-    console.log("fecha inicial: ");
-    console.log(fechaInicial);
-    console.log("duracion: ");
-    console.log(duracion);
-    console.log("fecha final: ");
-    console.log(fechaFinal);
     /*
     var franquicia = 10;
     var fechaInicial = "2016-12-01 13:59:59";
@@ -151,6 +133,28 @@ var AgendarMesa = React.createClass({
     });
     */
   },
+  handleBuscar:function(){
+    console.clear();
+
+    var franquicia = this.state.franquicia;
+    var fechaInicial = this.state.date;
+    var cupos = this.state.cantidadPersonas;
+    var duracion = this.state.duracion;
+    var fechaFinal='';
+    if (fechaInicial && duracion) {
+      var fecha1 = moment(fechaInicial);
+      var fechaaux = moment(fechaInicial);
+      var fechaFinal = fechaaux.add(duracion,'m');
+    }
+
+
+    console.log("fecha inicial: ");
+    console.log(fecha1);
+    console.log("duracion: ");
+    console.log(duracion);
+    console.log("fecha final: ");
+    console.log(fechaFinal);
+  },
   render:function(){
     if(this.state.listaRestaurantes){
       return(
@@ -167,8 +171,11 @@ var AgendarMesa = React.createClass({
           <input type="text" onChange={this.handlePersonas}/>
           <label>Username:</label>
           <input type="text" onChange={this.handleUsername}/>
+          <input type="submit" value="Buscar Mesas" onClick={this.handleBuscar}/>
           <ListaMesas mesas={this.state.mesas} handleChange={this.handleMesa}/>
+
           <input type="submit" value="Agendar Mesa" onClick={this.handleSubmit}/>
+
         </div>
       );
     }else{
