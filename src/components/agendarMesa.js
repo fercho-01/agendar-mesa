@@ -144,7 +144,7 @@ var AgendarMesa = React.createClass({
           <Select datos={this.state.listaFranquicias} handleChange={this.handleChangeFranquicia}/>
           <label>Ingrese la fecha:</label>
           <Datetime onChange={this.handleDate}/>
-          <label>Duración de la reserva:</label>
+          <label>Duración de la reserva (minutos):</label>
           <input type="text" onChange={this.handleDuracion}/>
           <label>Cantidad de personas:</label>
           <input type="text" onChange={this.handlePersonas}/>
