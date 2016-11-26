@@ -9,7 +9,7 @@ var MesaStore = Reflux.createStore({
   },
 
   agendarMesa:function(client,table,date,duration,amount_people){
-    alert("consume");
+    alert("Mesa Agendada");
     var params = {
       'client':client,
       'table':table,
@@ -27,6 +27,7 @@ var MesaStore = Reflux.createStore({
         params:params,
 		    success: function(data) {
           console.log(data);
+
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
           console.log("Status: " + textStatus);
