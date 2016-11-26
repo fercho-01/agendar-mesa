@@ -52,11 +52,11 @@ var AgendarMesa = React.createClass({
     }
 
     this.setState({listaFranquicias:franquiciasRestaurante});
-    this.buscarMesas();
+    //this.buscarMesas();
   },
   handleChangeFranquicia:function(event){
     this.setState({franquicia:event.target.value});
-    this.buscarMesas();
+    //this.buscarMesas();
   },
   handleSubmit:function(event){
     var username = this.state.username;
@@ -77,15 +77,15 @@ var AgendarMesa = React.createClass({
   },
   handleDuracion:function(event){
     this.setState({duracion:event.target.value});
-    this.buscarMesas();
+    //this.buscarMesas();
   },
   handlePersonas:function(event){
     this.setState({cantidadPersonas:event.target.value});
-    this.buscarMesas();
+    //this.buscarMesas();
   },
   handleUsername:function(event){
     this.setState({username:event.target.value});
-    this.buscarMesas();
+    //this.buscarMesas();
   },
   handleMesa:function(event){
     this.setState({mesa:event.target.value});
