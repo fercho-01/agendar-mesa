@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 
 let MesaActions = Reflux.createActions([
-  'ObtenerMesas'
+  'agendarMesa'
 ]);
 export default MesaActions;

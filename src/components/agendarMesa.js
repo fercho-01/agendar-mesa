@@ -36,6 +36,7 @@ var AgendarMesa = React.createClass({
       username:'',
       duracion:'',
       mesa:'',
+      dateFormat:''
     }
   },
 
@@ -58,31 +59,13 @@ var AgendarMesa = React.createClass({
     this.buscarMesas();
   },
   handleSubmit:function(event){
-    alert(JSON.stringify(this.state.agendarStore));
-    if(this.state.mesa!="" && this.state.username!="" && this.state.date!="" && this.state.duration!="" && this.state.cantidadPersonas!=""){
-      alert("añadir");
-      $.ajax({
-        type: "POST",
-        url: 'https://restaurant-node.herokuapp.com/api/tables/reserve',
-        data: {
-          client: this.state.username,
-          table: this.state.mesa,
-          date: this.state.date,
-          duration: this.state.duracion,
-          amount_people: this.state.cantidadPersonas
-        },
-        success: function(result) {
-          alert("post hecho")
-        },
-        error : function(result) {
-          alert("error")
-        },
-        dataType: 'json'
-      });
-    }else{
-      //alert("no");
-      //alert(this.state.mesa +  this.state.username+this.state.date+this.state.duration+this.state.cantidadPersonas)
-    }
+    var username = this.state.username;
+    var table = this.state.mesa;
+    var date = this.state.dateFormat;
+    date = date.substring(0, (date.length-3));
+    var duration = this.state.duracion;
+    var amount_people = this.state.cantidadPersonas;
+    MesaActions.agendarMesa(username,table,date,duration,amount_people);
   },
   handleDate:function(date){
     //date = date.subtract(5,'h');
@@ -147,6 +130,7 @@ var AgendarMesa = React.createClass({
 
       var fecha02 = fechaFinal.get('year')+'-'+fechaFinal.get('month')+'-'+fechaFinal.get('day')+' '+
                     fechaFinal.get('hour')+':'+fechaFinal.get('minute')+':'+fechaFinal.get('second');
+      this.setState({dateFormat:fecha01});
       this.buscarMesas(franquicia,fecha01,fecha02,cupos);
     }
   },

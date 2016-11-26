@@ -7,27 +7,33 @@ var MesaStore = Reflux.createStore({
   init: function() {
 
   },
-  ObtenerMesas:function(franquicia,fechaIni,fechaFin,capacidad){
-    var param = franquicia+'/'+fechaIni+'/'+fechaFin+'/'+capacidad;
+
+  agendarMesa:function(client,table,date,duration,amount_people){
+    alert("consume");
+    var params = {
+      'client':client,
+      'table':table,
+      'date':date,
+      'duration':duration,
+      'amount_people':amount_people
+    }
     $.ajax({
-        url: 'https://restaurant-node.herokuapp.com/api/tables/available/'+param,
+        url: 'https://restaurant-node.herokuapp.com/api/tables/reserve',
         async: true,
       	crossDomain: true,
-        method: 'GET',
+        method: 'POST',
       	cache: false,
       	context: this,
+        params:params,
 		    success: function(data) {
-          this.trigger(data.slice());
-          return data.slice();
+          console.log(data);
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
           console.log("Status: " + textStatus);
           console.log("Error: " + errorThrown);
         }
-    });
-  }
-
-
+      });
+}
 });
 
 export default MesaStore;
