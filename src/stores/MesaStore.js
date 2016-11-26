@@ -24,6 +24,7 @@ var MesaStore = Reflux.createStore({
         method: 'POST',
       	cache: false,
       	context: this,
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         params:params,
 		    success: function(data) {
           console.log(data);
